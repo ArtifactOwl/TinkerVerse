@@ -1,53 +1,9 @@
-// world.fbs — proc-gen headers, deposits, reserved feeds
 namespace world;
-
 file_identifier "WRL0";
-
-// Fixed-length feed vector with headroom for future feeds
-const FEED_DIM: ushort = 16; // MVP: 10 active + 2-4 reserved
-
+const FEED_DIM: ushort = 16;
 enum FeedId:ubyte {
-  FE_IRON = 0,
-  FE_ALUMINUM = 1,
-  FE_COPPER = 2,
-  FE_TITANIUM = 3,
-  FE_SILICON = 4,
-  FE_CARBON = 5,
-  FE_WATER = 6,
-  FE_OXYGEN = 7,
-  FE_LITHIUM = 8,
-  FE_RARE_EARTH = 9,
-  // Reserved for future epochs (spawn_weight = 0 until enabled)
-  FE_XENO_POLYMER = 10,
-  FE_HYPER_NOBLE = 11,
-  FE_REFRACTORY = 12,
-  FE_PLATINUM_GRP = 13,
-  FE_RESERVED_14 = 14,
-  FE_RESERVED_15 = 15
-}
-
-// Galaxy contract: seed + generator version pins determinism
-table GalaxyHeader {
-  id:ulong;
-  seed:ulong;
-  generator_version:ushort; // 0=DARK, 1=LIVE v1
-  feature_flags:uint;       // bitset for incremental toggles
-}
-
-// Mixture of feedstocks in a deposit (length FEED_DIM)
-table Deposit {
-  sector_x:int;
-  sector_y:int;
-  sector_z:int;
-  grade:float;         // 0..1 quality scalar applied to vector
-  feeds:[float];       // length must be FEED_DIM; sum not required to 1.0
-}
-
-// Simple biome header for farming later
-enum Biosphere:ubyte { None = 0, Microbe = 1, Flora = 2, Complex = 3 }
-table Biome {
-  type:string;         // e.g., "desert", "ocean"
-  biosphere:Biosphere;
-  t_min:float; t_opt:float; t_max:float; // C
-  rainfall:float;      // mm/yr (scaled)
+  FE_IRON=0, FE_ALUMINUM=1, FE_COPPER=2, FE_TITANIUM=3, FE_SILICON=4,
+  FE_CARBON=5, FE_WATER=6, FE_OXYGEN=7, FE_NITROGEN=8, FE_LITHIUM=9,
+  FE_RARE_EARTH=10, FE_XENO_POLYMER=11, FE_HYPER_NOBLE=12, FE_REFRACTORY=13,
+  FE_PLATINUM_GRP=14, FE_RESERVED_15=15
 }

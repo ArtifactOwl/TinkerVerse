@@ -1,57 +1,11 @@
-// astral.fbs — core wire messages (v0)
-namespace astral;
-
-file_identifier "AST0"; // bump on breaking changes only
-
-// ---- Common types ----
+namespace astral; file_identifier "AST0";
 table Vec3 { x:float; y:float; z:float; }
-// 3D-ready: rotation + scale for later 3D clients
 table Quat { x:float; y:float; z:float; w:float; }
-
-enum EntityKind:ushort { Unknown = 0, Ship = 1, Projectile = 2 }
-
-// Client -> Server
-// Types: 1=Hello, 2=Input
-
-table Hello {
-  proto_version:uint16; // 0 for this starter
-  client_id:ulong;      // random nonce from client
-}
-
-table Input {
-  tick:uint32;       // client-predicted tick
-  entity_id:ulong;   // controlled ship
-  thrust:Vec3;       // -1..1 in each axis
-  aim:Vec3;          // unit vector
-  fire:bool;
-}
-
-// Server -> Client
-// Types: 10=Welcome, 11=Snapshot
-
-table Welcome {
-  server_tick_hz:uint16; // e.g., 60
-  seed_hi:ulong;         // universe seed high
-  seed_lo:ulong;         // universe seed low
-  your_entity_id:ulong;  // the ship spawned for this client (optional for CLI)
-}
-
-// Minimal entity state for reconciliation
-table EntityState {
-  id:ulong;
-  kind:EntityKind;
-  pos:Vec3;
-  vel:Vec3;
-  rot:Quat;           // 3D-ready
-  scale:Vec3;         // default (1,1,1)
-  visual_id:ulong;    // content hash (0 = none)
-  hp:float;
-}
-
-table Snapshot {
-  tick:uint32;
-  entities:[EntityState];
-  checksum:ulong; // sim-state checksum for audit/replay
-}
-
-// No single root_type: app chooses per-message.
+enum EntityKind:ushort { Unknown=0, Ship=1, Projectile=2, Asteroid=3 }
+table Hello { proto_version:uint16; client_id:ulong; }
+table Input { tick:uint32; entity_id:ulong; thrust:Vec3; aim:Vec3; fire:bool; }
+table Welcome { server_tick_hz:uint16; seed_hi:ulong; seed_lo:ulong; your_entity_id:ulong; }
+table EntityState { id:ulong; kind:EntityKind; pos:Vec3; vel:Vec3; rot:Quat; scale:Vec3; visual_id:ulong; hp:float; }
+table Snapshot { tick:uint32; entities:[EntityState]; checksum:ulong; }
+table CraftRequest { fab_entity_id:ulong; recipe_id:ulong; kg:float; }
+table CraftProgress { fab_entity_id:ulong; recipe_id:ulong; started_tick:uint32; eta_tick:uint32; done:bool; }
