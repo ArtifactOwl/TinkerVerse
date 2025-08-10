@@ -27,6 +27,7 @@ ws.addEventListener('message', (ev)=>{
     if (m.type === 'welcome') { myId = m.ship_id; hudShip.textContent = String(myId); }
     else if (m.type === 'snapshot') { for (const e of m.entities) ents.set(e.id, e); draw(); }
     else if (m.type === 'inv') { invEl.textContent = `C: ${m.feeds.C.toFixed(2)}  H2O: ${m.feeds.H2O.toFixed(2)}  N: ${m.feeds.N.toFixed(2)}  Food: ${m.food.toFixed(2)}`; }
+    else if (m.type === 'craft_result') { console.log('craft', m); }
   } catch {}
 });
 
