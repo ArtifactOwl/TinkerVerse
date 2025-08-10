@@ -1,0 +1,20 @@
+[package]
+name = "astral-server"
+version = "0.0.1"
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+thiserror = "1"
+tokio = { version = "1", features = ["rt-multi-thread","macros","time","net"] }
+bytes = "1"
+futures = "0.3"
+tokio-tungstenite = "0.21"
+flatbuffers = "24"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+parking_lot = "0.12"
+
+[profile.release]
+lto = true
+codegen-units = 1

@@ -1,0 +1,4 @@
+/server/target
+**/.DS_Store
+node_modules
+client-2d-web/protocol
