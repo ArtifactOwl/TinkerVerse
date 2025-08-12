@@ -1,0 +1,11 @@
+1) Create a branch
+   git checkout -b feature/tinkerverse-mining-fab
+
+2) Copy these files over your repo root (preserve .git/), review changes.
+
+3) Commit & push
+   git add -A
+   git commit -m "TinkerVerse: mining + inventory + fabricator + HUD; brand rename (2025-08-10)"
+   git push -u origin feature/tinkerverse-mining-fab
+
+4) Open PR on GitHub from feature/tinkerverse-mining-fab to main.
